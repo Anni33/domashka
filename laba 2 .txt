@@ -1,0 +1,44 @@
+//#include "stdafx.h"
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+ 
+int main()
+{
+    //srand(time(0));//инициализируем генератор случайных чисел
+    fstream fs;//создаем файловый поток
+    fs.open("f.txt",ios::in|ios::out|ios::trunc);//открывай файл для записи чтения и обнуляем его
+    int C=10;//сколько букв в файле
+    for(int i=0;i<C;i++)//случайно заполняем файл буквами
+   {
+       fs<<char(rand()%(int('z')-int('a'))+int('a'));
+    }
+
+    int a=0,b=0,c=0,d=0,e=0,f=0;//переменные для хранения кол-ва нужных нам букв
+    fs.seekg(0);//идем в начало файла
+     char ch;//переменная для хранения считываемого символа
+    while(!fs.eof())//пока не конец файла
+    {
+        fs>>ch;//читаем символ
+        switch (ch)//проверяем является ли он нужным нам,если да увеличиваем соответствующий счетчик
+        {
+            case 'a':{a++;break;}
+            case 'b':{b++;break;}
+            case 'c':{c++;break;}
+            case 'd':{d++;break;}
+            case 'e':{e++;break;}
+            case 'f':{f++;break;}
+        }
+ 
+    }
+    fstream fs1;//поток для выходного файла
+    fs1.open("g.txt",ios::in|ios::out|ios::trunc);//открываем его
+    fs1<<setw(5)<<"a"<<setw(5)<<"b"<<setw(5)<<"c"<<setw(5)<<"d"<<setw(5)<<"e"<<setw(5)<<"f"<<endl;//записываем красивую табличку
+    fs1<<setw(5)<<a<<setw(5)<<b<<setw(5)<<c<<setw(5)<<d<<setw(5)<<e<<setw(5)<<f;//записываем данные о буквах
+    fs1.close();//закрываем потоки
+    fs.close();
+    cin.get();
+    return 0;
+}
